@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5001:5001"
+    networks:
+      - microservices-net
+
+  data-service:
+    build: ./data-service
+    ports:
+      - "5002:5002"
+    networks:
+      - microservices-net
+
+  logging-service:
+    build: ./logging-service
+    ports:
+      - "5003:5003"
+    networks:
+      - microservices-net
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
