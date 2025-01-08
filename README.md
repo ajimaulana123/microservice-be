@@ -19,6 +19,26 @@ Proyek ini bertujuan untuk membangun dan mengelola beberapa microservices sederh
 - **Express.js**: Framework Node.js yang digunakan untuk membuat RESTful API pada setiap microservice.
 - **JWT (JSON Web Token)**: Untuk autentikasi pada Service A.
 
+## Fitur
+
+1. **Layanan Autentikasi**:
+   - Kontrol Akses Berbasis Peran (RBAC) untuk peran `admin` dan `user`.
+   - Autentikasi berbasis JWT (JSON Web Token).
+
+2. **Layanan Data**:
+   - Operasi CRUD untuk data pengguna.
+   - Caching dengan Redis untuk meningkatkan kecepatan respons.
+
+3. **Layanan Logging**:
+   - Penanganan log terpusat menggunakan antrian Bull untuk pemrosesan log.
+   - Mekanisme retry otomatis untuk log yang gagal diproses.
+
+4. **Tooling DevOps**:
+   - Monitoring menggunakan **Prometheus** dan visualisasi dengan **Grafana**.
+   - Sentralisasi log dengan **ELK Stack** (Elasticsearch, Logstash, Kibana).
+   - Pipeline CI/CD menggunakan **GitHub Actions**.
+   - Deployment ke cluster **Kubernetes**.
+
 ## Cara Menjalankan Proyek
 
 ### Prasyarat

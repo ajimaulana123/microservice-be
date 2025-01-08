@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "main": "data.js",
     "dependencies": {
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+	"redis": "^4.6.7"
     },
     "scripts": {
         "start": "node app/data.js"
