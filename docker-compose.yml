@@ -1,29 +1,48 @@
-version: "3.9"
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.1
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=yourpassword
+      - xpack.security.http.ssl.enabled=false
     ports:
       - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - microservices-net
 
   logstash:
     image: docker.elastic.co/logstash/logstash:8.10.1
     container_name: logstash
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USER=elastic
+      - ELASTICSEARCH_PASSWORD=yourpassword
     ports:
       - "5000:5000"
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - microservices-net
+    depends_on:
+      - elasticsearch
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.10.1
     container_name: kibana
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=kibana123
     ports:
       - "5601:5601"
+    networks:
+      - microservices-net
+    depends_on:
+      - elasticsearch
 
   redis:
     image: redis:latest
@@ -34,6 +53,8 @@ services:
   auth-service:
     build: ./auth-service
     container_name: auth-service
+    environment:
+      - JWT_SECRET=your-very-secure-secret
     ports:
       - "5001:5001"
     networks:
@@ -62,6 +83,10 @@ services:
       - "80:80"
     networks:
       - microservices-net
+
+volumes:
+  elasticsearch-data:
+    driver: local
 
 networks:
   microservices-net:
