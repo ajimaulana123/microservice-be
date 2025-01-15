@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-   elasticsearch:
+  elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.1
     container_name: elasticsearch
     environment:
@@ -33,6 +33,7 @@ services:
 
   auth-service:
     build: ./auth-service
+    container_name: auth-service
     ports:
       - "5001:5001"
     networks:
@@ -40,6 +41,7 @@ services:
 
   data-service:
     build: ./data-service
+    container_name: data-service
     ports:
       - "5002:5002"
     networks:
@@ -47,6 +49,7 @@ services:
 
   logging-service:
     build: ./logging-service
+    container_name: logging-service
     ports:
       - "5003:5003"
     networks:
@@ -54,6 +57,7 @@ services:
 
   nginx:
     build: ./nginx
+    container_name: nginx
     ports:
       - "80:80"
     networks:
@@ -62,3 +66,4 @@ services:
 networks:
   microservices-net:
     driver: bridge
+
